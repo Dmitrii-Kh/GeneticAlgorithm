@@ -3,12 +3,12 @@ package com.ai.labs
 import com.ai.labs.domain.*
 
 class Data() {
-    private val rooms: ArrayList<Room>
-    private val instructors: ArrayList<Instructor>
-    private val courses: ArrayList<Course>
-    private val depts: ArrayList<Department>
-    private val meetingTimes: ArrayList<MeetingTime>
-    private var numOfClasses: Int = 0
+    public val rooms: ArrayList<Room>
+    public val instructors: ArrayList<Instructor>
+    public val courses: ArrayList<Course>
+    public val depts: ArrayList<Department>
+    public val meetingTimes: ArrayList<MeetingTime>
+    var numOfClasses: Int = 0
 
     init {          // TODO change initialization
         val room1 = Room("R1", 25)
