@@ -1,19 +1,57 @@
 package com.ai.labs
 
+import java.util.stream.IntStream
+
 data class GeneticAlgorithm(val data: Data){
     public fun evolve(population: Population): Population {
-        return mutatePopulation(crossover(population))
+        return mutatePopulation(crossoverPopulation(population))
+    }
+
+    public fun crossoverPopulation(population: Population): Population {
+        val crossoverPopulation = Population(population.schedules.size, data)
+        IntStream.range(0, NUMB_OF_ELITE_SCHEDULES).forEach{ x ->
+            crossoverPopulation.schedules[x] = population.schedules[x] }
+        IntStream.range(NUMB_OF_ELITE_SCHEDULES, population.schedules.size).forEach{ x ->
+            if (CROSSOVER_RATE > Math.random()) {
+                val schedule1 = selectTournamentPopulation(population).sortByFitness().schedules[0]
+                val schedule2 = selectTournamentPopulation(population).sortByFitness().schedules[0]
+                crossoverPopulation.schedules[x] = population.schedules[x]
+            }
+        }
+        return crossoverPopulation
+    }
+    public fun crossoverSchedule(schedule1: Schedule, schedule2: Schedule): Schedule {
+        val crossoverSchedule = Schedule(data).initialize()
+        IntStream.range(0, crossoverSchedule.classes.size).forEach { x ->
+            if (Math.random() > 0.5) crossoverSchedule.classes[x] = schedule1.classes[x]
+            else crossoverSchedule.classes[x] = schedule2.classes[x]
+        }
+        return crossoverSchedule
     }
     public fun mutatePopulation(population: Population): Population {
-        TODO()
+        val mutatePopulation = Population(population.schedules.size, data)
+        val schedules = mutatePopulation.schedules
+        IntStream.range(0, NUMB_OF_ELITE_SCHEDULES).forEach { x ->
+            schedules[x] = population.schedules[x]
+        }
+        IntStream.range(NUMB_OF_ELITE_SCHEDULES, population.schedules.size).forEach { x ->
+            schedules[x] = mutateSchedule(population.schedules[x])
+        }
+        return mutatePopulation
     }
-    public fun crossover(population: Population): Population {
-        TODO()
-    }
-    public fun mutateSchedule(schedule: Schedule): Schedule {
-        TODO()
+
+    public fun mutateSchedule(mutateSchedule: Schedule): Schedule {
+        val schedule = Schedule(data).initialize()
+        IntStream.range(0, mutateSchedule.classes.size).forEach { x ->
+            if (MUTATION_RATE > Math.random()) mutateSchedule.classes[x] = schedule.classes[x]
+        }
+        return mutateSchedule
     }
     public fun selectTournamentPopulation(population: Population): Population {
-        TODO()
+        val tournamentPopulation = Population(TOURNAMENT_SELECTION_SIZE, data)
+        IntStream.range(0, TOURNAMENT_SELECTION_SIZE).forEach { x ->
+            tournamentPopulation.schedules[x] = population.schedules[(population.schedules.size * Math.random()).toInt()]
+        }
+        return tournamentPopulation
     }
 }
