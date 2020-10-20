@@ -1,5 +1,5 @@
 package com.ai.labs
 
-fun main(args: Array<String>) {
+fun main() {
     println("Hello World!")
 }
