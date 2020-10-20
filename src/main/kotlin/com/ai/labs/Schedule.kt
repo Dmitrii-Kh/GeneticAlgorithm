@@ -28,7 +28,7 @@ class Schedule() {
         get() = field
 
 
-    constructor(data: Data) {
+    constructor(data: Data) : this() {
         this.data = data
         classes = ArrayList<Class>(data.numOfClasses)
     }
