@@ -1,5 +1,8 @@
 package com.ai.labs
 
+import com.ai.labs.domain.*
+
+
 fun main() {
-    println("Hello World!")
+//    val a = Class(1,Department(), )
 }
