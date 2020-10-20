@@ -8,7 +8,7 @@ class Schedule() {
     var classes: ArrayList<Class> = ArrayList()
         get() {
             isFitnessChanged = true
-            return classes
+            return field
         }
     var data: Data = Data()
         get() = field
@@ -22,7 +22,7 @@ class Schedule() {
                 fitness = calculateFitness()
                 isFitnessChanged = false
             }
-            return fitness
+            return field
         }
     var isFitnessChanged = true
         get() = field

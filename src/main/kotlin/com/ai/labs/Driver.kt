@@ -1,6 +1,7 @@
 package com.ai.labs
 
 import com.ai.labs.domain.*
+import kotlin.properties.Delegates
 
 const val POPULATION_SIZE = 9
 const val MUTATION_RATE = 0.1
@@ -11,11 +12,24 @@ const val NUMB_OF_ELITE_SCHEDULES = 1
 fun main() {
     val driver = Driver()
     driver.data = Data()
+    val generationNumber = 0
     driver.printAvailableData()
+    println("> Generation # $generationNumber")
+    print("  Schedule # |                                             ")
+    print("Classes [dept,class,room, instructor, meeting-time]        ")
+    println("                                     | Fitness | Conflicts")
+    print("---------------------------------------------------------------------------------")
+    println("-----------------------------------------------------------------------------------")
+    val geneticAlgorithm = GeneticAlgorithm(driver.data)
+    val population = Population(POPULATION_SIZE, driver.data).sortByFitness()
+    population.schedules.forEach{ schedule -> println("         ${driver.scheduleNumb} " +
+            "       | schedule | " + String.format("%.5f", schedule.fitness) + " |  ${schedule.numbOfConflicts}")}
+
 }
 
 public class Driver {
-     lateinit var data: Data
+    lateinit var data: Data
+    var scheduleNumb: Int = 0
     fun printAvailableData() {
         println("Available Departments:")
         data.depts.forEach{ x -> println("name: ${x.name}, courses: ${x.courses}")}
