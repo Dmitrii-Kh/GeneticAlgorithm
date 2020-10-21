@@ -18,8 +18,8 @@ class Data() {
 
         val meetingTime1 = MeetingTime("MT1", "MWF 9:00 - 10:00")
         val meetingTime2 = MeetingTime("MT2", "MWF 10:00 - 11:00")
-        val meetingTime3 = MeetingTime("MT1", "MWF 9:00 - 10:30")
-        val meetingTime4 = MeetingTime("MT1", "MWF 10:30 - 12:00")
+        val meetingTime3 = MeetingTime("MT1", "TTH 9:00 - 10:30")
+        val meetingTime4 = MeetingTime("MT1", "TTH 10:30 - 12:00")
         meetingTimes = arrayListOf(meetingTime1, meetingTime2, meetingTime3, meetingTime4)
 
         val instructor1 = Instructor("I1", "Ivan Petrov")

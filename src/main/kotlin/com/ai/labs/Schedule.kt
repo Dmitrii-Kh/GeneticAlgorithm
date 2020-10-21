@@ -50,13 +50,14 @@ class Schedule() {
         classes.forEach{ x ->
             if (x.room.seatingCapacity < x.course.maxNumbOfStudents)
                 numbOfConflicts++
-            classes.stream().filter{ y -> classes.indexOf(y) >= classes.indexOf(x)
-            }.forEach { y -> {
-                if (x.meetingTime == y.meetingTime && x.id != y.id) {
-                    if (x.room == y.room) numbOfConflicts++
-                    if (x.instructor == y.instructor) numbOfConflicts++
+            classes.stream().filter{ y -> classes.indexOf(y) >= classes.indexOf(x) }.forEach { y ->
+                run {
+                    if (x.meetingTime == y.meetingTime && x.id != y.id) {
+                        if (x.room == y.room) numbOfConflicts++
+                        if (x.instructor == y.instructor) numbOfConflicts++
+                    }
                 }
-            } }
+            }
         }
         return (1/(numbOfConflicts + 1).toDouble())
     }
