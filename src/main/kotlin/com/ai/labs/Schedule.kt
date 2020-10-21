@@ -19,14 +19,13 @@ class Schedule() {
     var fitness: Double = -1.0
         get() {
             if (isFitnessChanged) {
-                fitness = calculateFitness()
+                field = calculateFitness()
                 isFitnessChanged = false
             }
             return field
         }
     var isFitnessChanged = true
         get() = field
-
 
     constructor(data: Data) : this() {
         this.data = data
@@ -59,7 +58,7 @@ class Schedule() {
                 }
             } }
         }
-        return (1/(numbOfConflicts + 1)).toDouble()
+        return (1/(numbOfConflicts + 1).toDouble())
     }
 
     override fun toString(): String {

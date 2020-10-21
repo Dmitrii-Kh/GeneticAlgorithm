@@ -17,19 +17,21 @@ fun main() {
     println("> Generation # $generationNumber")
     print("  Schedule # |                                             ")
     print("Classes [dept,class,room, instructor, meeting-time]        ")
-    println("                                     | Fitness | Conflicts")
-    print("---------------------------------------------------------------------------------")
-    println("-----------------------------------------------------------------------------------")
+    println("                                                         | Fitness | Conflicts")
+    print("-------------------------------------------------------------------------------------------------")
+    println("----------------------------------------------------------------------------------------------------")
     val geneticAlgorithm = GeneticAlgorithm(driver.data)
     val population = Population(POPULATION_SIZE, driver.data).sortByFitness()
-    population.schedules.forEach{ schedule -> println("         ${driver.scheduleNumb} " +
-            "       | schedule | " + String.format("%.5f", schedule.fitness) + " |  ${schedule.numbOfConflicts}")}
+    population.schedules.forEach{ schedule -> println("         ${driver.scheduleNumb++} " +
+            "  | $schedule | " + String.format("%.5f", schedule.fitness) + " |  ${schedule.numbOfConflicts}")}
 
 }
 
 public class Driver {
     lateinit var data: Data
     var scheduleNumb: Int = 0
+    var classNumb: Int = 1
+
     fun printAvailableData() {
         println("Available Departments:")
         data.depts.forEach{ x -> println("name: ${x.name}, courses: ${x.courses}")}
@@ -41,5 +43,34 @@ public class Driver {
         data.instructors.forEach{ x -> println("id: ${x.id}, name: ${x.name}")}
         println("Available Meeting Times:")
         data.meetingTimes.forEach{ x -> println("id #: ${x.id}, Meeting Time: ${x.time}")}
+    }
+
+    fun printScheduleAsTable(schedule: Schedule, generation: Int) {
+        val classes = schedule.classes
+        print("\n                        ")
+        println("Class # | Dept | Course (number, max # of students) | Room (Capacity) | Instructor (Id) | Meeting Time (id) ")
+        print("                       ")
+        print("-------------------------------------------------------------------------------------------------")
+        println("----------------------------------------------------------------------------------------------------")
+        classes.forEach { x -> {
+            val majorIndex = data.depts.indexOf(x.dept)
+            val courseIndex = data.courses.indexOf(x.course)
+            val roomIndex = data.rooms.indexOf(x.room)
+            val instructorIndex = data.instructors.indexOf(x.instructor)
+            val meetingTimeIndex = data.meetingTimes.indexOf(x.meetingTime)
+            print("                       ")
+            print(String.format(" %1$02d ", classNumb) + " | ")
+            print(String.format("%1$4s", data.depts[majorIndex].name) + " | ")
+            print(String.format("%1$21s", data.courses[courseIndex].name)  +
+                    "(${data.courses[courseIndex].number} ${x.course.maxNumbOfStudents})          | ")
+            print(String.format("%1$10s", data.rooms[roomIndex].number) +
+                    "${x.room.seatingCapacity}       | ")
+            print(String.format("%1$15s", data.instructors[instructorIndex].name) +
+                    "(${data.instructors[instructorIndex].id})")
+            classNumb++
+        } }
+        if (schedule.fitness == 1.0)
+            println("> Solution Found in ${generation+1} generations")
+
     }
 }
