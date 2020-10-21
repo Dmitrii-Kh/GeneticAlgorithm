@@ -4,12 +4,9 @@ import java.util.stream.IntStream
 
 class Population(size: Int, data: Data) {
     var schedules: ArrayList<Schedule> = ArrayList()
-        get() {
-            return field
-        }
 
     init {
-        schedules = ArrayList<Schedule>(size)
+        schedules = ArrayList(size)
         IntStream.range(0, size).forEach{ _ -> schedules.add(Schedule(data).initialize()) }
     }
     fun sortByFitness(): Population {

@@ -3,7 +3,7 @@ package com.ai.labs
 import java.util.stream.IntStream
 
 data class GeneticAlgorithm(val data: Data){
-    public fun evolve(population: Population): Population {
+    fun evolve(population: Population): Population {
         return mutatePopulation(crossoverPopulation(population))
     }
 
@@ -20,7 +20,7 @@ data class GeneticAlgorithm(val data: Data){
         }
         return crossoverPopulation
     }
-    fun crossoverSchedule(schedule1: Schedule, schedule2: Schedule): Schedule {
+    private fun crossoverSchedule(schedule1: Schedule, schedule2: Schedule): Schedule {
         val crossoverSchedule = Schedule(data).initialize()
         IntStream.range(0, crossoverSchedule.classes.size).forEach { x ->
             if (Math.random() > 0.5) crossoverSchedule.classes[x] = schedule1.classes[x]

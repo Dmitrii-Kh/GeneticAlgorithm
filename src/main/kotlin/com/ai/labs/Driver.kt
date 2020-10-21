@@ -1,8 +1,5 @@
 package com.ai.labs
 
-import com.ai.labs.domain.*
-import kotlin.properties.Delegates
-
 const val POPULATION_SIZE = 9
 const val MUTATION_RATE = 0.1
 const val CROSSOVER_RATE = 0.9
@@ -42,7 +39,7 @@ fun main() {
     }
 }
 
-public class Driver {
+class Driver {
     lateinit var data: Data
     var scheduleNumb: Int = 0
     var classNumb: Int = 1

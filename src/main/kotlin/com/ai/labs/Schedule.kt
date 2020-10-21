@@ -11,11 +11,8 @@ class Schedule() {
             return field
         }
     var data: Data = Data()
-        get() = field
-    var classNumb = 0
-        get() = field
+    private var classNumb = 0
     var numbOfConflicts = 0
-        get() = field
     var fitness: Double = -1.0
         get() {
             if (isFitnessChanged) {
@@ -24,12 +21,11 @@ class Schedule() {
             }
             return field
         }
-    var isFitnessChanged = true
-        get() = field
+    private var isFitnessChanged = true
 
     constructor(data: Data) : this() {
         this.data = data
-        classes = ArrayList<Class>(data.numOfClasses)
+        classes = ArrayList(data.numOfClasses)
     }
 
     fun initialize(): Schedule {
@@ -63,9 +59,8 @@ class Schedule() {
     }
 
     override fun toString(): String {
-        var returnValue:String = ""
-//        for (x:Int in (0 until classes.size))
-        var x: Int = 0
+        var returnValue = ""
+        var x = 0
         while (x < classes.size-1){
             returnValue += classes[x].toString() + ","
             x++
